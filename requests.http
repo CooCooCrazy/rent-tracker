@@ -1,0 +1,122 @@
+###
+GET http://localhost:8080/tenants
+
+###
+GET http://localhost:8080/tenants/payment-history
+
+###
+POST http://localhost:8080/tenants
+Content-Type: application/json
+
+{
+  "name": "Jerald",
+  "rent": {
+    "dueDate": "2026-12-12",
+    "value": 10000
+  }
+}
+
+###
+DELETE http://localhost:8080/tenants/9/delete
+
+###
+PUT http://localhost:8080/tenants/9/change-due-date
+Content-Type: application/json
+
+{
+    "dueDate": "2027-03-22"
+}
+
+###
+PUT http://localhost:8080/tenants/9/change-rent
+Content-Type: application/json
+
+{
+  "value": 20000
+}
+
+###
+PUT http://localhost:8080/tenants/2/set-to-paid
+
+###
+PUT http://localhost:8080/tenants/1/restart
+Content-Type: application/json
+
+{
+  "dueDate": "2027-03-22"
+}
+
+###
+POST http://localhost:8080/tenants/3/photo
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="jim.jpg"
+Content-Type: image/jpeg
+
+< C:\Users\Jim Madriaga\Downloads\shrek.jpg
+--WebAppBoundary--
+
+###
+// failed photo
+POST http://localhost:8080/tenants/1/photo
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="notes.txt"
+Content-Type: text/plain
+
+< C:\Users\Jim Madriaga\Downloads\bababoi.txt
+--WebAppBoundary--
+
+###
+GET http://localhost:8080/tenants/download-history
+
+###
+// ----- 2xx SUCCESS -----
+
+// 200 OK
+// Standard success response. Used for successful GET, PUT, PATCH.
+
+// 201 Created
+// A new resource was successfully created (typically after POST).
+
+// 204 No Content
+// Success, but nothing to send back. Common for DELETE.
+
+
+// ----- 4xx CLIENT ERRORS -----
+
+// 400 Bad Request
+// Malformed request or failed validation (missing field, wrong format, etc).
+
+// 401 Unauthorized
+// Client is not authenticated (not logged in / missing or invalid token).
+
+// 403 Forbidden
+// Client IS authenticated but doesn't have permission for this action.
+
+// 404 Not Found
+// The resource (e.g. an id) doesn't exist.
+
+// 409 Conflict
+// Conflicts with current state (duplicate entry, unique constraint, etc).
+
+// 422 Unprocessable Entity
+// Well-formed request, but fails business-rule validation.
+
+
+// ----- 5xx SERVER ERRORS -----
+
+// 500 Internal Server Error
+// Generic "something broke" error. Spring's default fallback for
+// unhandled exceptions.
+
+// 503 Service Unavailable
+// Server temporarily can't handle the request (overloaded, down, etc).
+
+
+// ----- RULE OF THUMB -----
+// 2xx = it worked
+// 4xx = you (client) did something wrong
+// 5xx = we (server) did something wrong
